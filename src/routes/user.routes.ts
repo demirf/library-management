@@ -11,4 +11,6 @@ router.get('/:id', userController.findOne);
 router.put('/:id', userController.update);
 router.delete('/:id', userController.delete);
 
+router.post('/:userId/borrow/:bookId', userController.borrowBook);
+
 export default router;

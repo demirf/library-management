@@ -9,7 +9,7 @@ export class BorrowRecord {
   static tableName = tableName;
 
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @ManyToOne(() => User, user => user.borrowRecords)
   user: User;
@@ -18,12 +18,12 @@ export class BorrowRecord {
   book: Book;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  borrowedAt: Date;
+  borrowedAt?: Date;
 
   @Column({ type: 'timestamp', nullable: true })
-  returnedAt: Date | null;
+  returnedAt?: Date | null;
 
   @Column({ type: 'float', nullable: true })
-  rating: number;
+  rating?: number;
 }
 
