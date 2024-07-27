@@ -1,6 +1,6 @@
 import { appEventEmitter } from './eventEmitter';
 import { BookService } from "../services/book.service";
-import {BorrowRecordService} from "../services/borrow.record.service";
+import { BorrowRecordService } from "../services/borrow.record.service";
 
 appEventEmitter.on('bookReturned', async (bookId: number) => {
   const bookService = new BookService();
