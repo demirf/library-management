@@ -2,7 +2,7 @@ import { body, ValidationChain, validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 
 // Validation rules
-export const createBookValidation: ValidationChain[] = [
+export const createUpdateBookValidation: ValidationChain[] = [
   body('name').isString().withMessage('Name must be a string').notEmpty().withMessage('Name is required'),
 ];
 

@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/user.controller';
-import { createUserValidation, returnBookValidation, validate } from "../validators/user.validator";
+import { createUpdateUserValidation, returnBookValidation, validate } from "../validators/user.validator";
 
 const router = Router();
 const userController = new UserController();
 
-router.post('/', createUserValidation, validate, userController.create);
+router.post('/', createUpdateUserValidation, validate, userController.create);
 router.get('/', userController.findAll);
 router.get('/:id', userController.findOne);
-router.put('/:id', userController.update);
+router.put('/:id', createUpdateUserValidation, validate, userController.update);
 router.delete('/:id', userController.delete);
 
 router.post('/:userId/borrow/:bookId', userController.borrowBook);
