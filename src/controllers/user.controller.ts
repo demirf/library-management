@@ -14,12 +14,24 @@ export class UserController extends BaseController<User> {
 
   borrowBook = async (req: Request, res: Response): Promise<void> => {
     try {
-      const userId = req.params.userId;
-      const bookId = req.params.bookId;
+      const { userId, bookId } = req.params;
 
-      await this.userService.borrowBook(parseInt(userId), parseInt(bookId));
+      await this.userService.borrowBook(Number(userId), Number(bookId));
 
       res.status(200).json({ message: 'Book borrowed successfully' });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+
+  returnBook = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { userId, bookId } = req.params;
+      const { score } = req.body;
+
+      await this.userService.returnBook(Number(userId), Number(bookId), Number(score));
+
+      res.status(200).json({ message: 'Book returned successfully' });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { AppDataSource } from './config';
 import userRoutes from "./routes/user.routes";
 import bookRoutes from "./routes/book.routes";
+import './events/handlers';
 
 const app = express();
 const port = process.env.PORT || 3000;

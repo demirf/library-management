@@ -4,6 +4,7 @@ import { BaseService } from '../core/base.service';
 import { AppDataSource } from '../config';
 import { BorrowRecordService } from "./borrow.record.service";
 import { BookService } from "./book.service";
+import { appEventEmitter } from "../events/eventEmitter";
 
 export class UserService extends BaseService<User> {
   private userRepository: Repository<User>;
@@ -33,9 +34,19 @@ export class UserService extends BaseService<User> {
       throw new Error('User has already borrowed this book');
     }
 
-    await this.borrowRecordService.create({
-      user,
-      book
-    });
+    await this.borrowRecordService.create({ user, book });
+  }
+
+  async returnBook(userId: number, bookId: number, score: number): Promise<void> {
+    const borrowRecord = await this.borrowRecordService.existingBorrowRecord(userId, bookId);
+
+    if (!borrowRecord) {
+      throw new Error('No active borrow record found for this user and book.');
+    }
+
+    await this.borrowRecordService.update(borrowRecord.id, { returnedAt: new Date(), rating: score });
+
+    // Emit the event to update the book's average rating
+    appEventEmitter.emit('bookReturned', bookId, score);
   }
 }
